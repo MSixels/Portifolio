@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ * Design tokens (exact values from the prototype)
+ * ------------------------------------------------------------------ */
+@theme {
+  --color-base: #080a0e;
+  --color-ink: #eef1f5;
+  --color-muted: #aeb6c2;
+  --color-muted-2: #7e8794;
+  --color-muted-3: #5c6573;
+  --color-accent: #2bd9ff;
+  --color-accent-2: #5a8cff;
+  --color-node: #9fe8ff;
+  --color-star: #9fd8ff;
+  --color-dark: #04060a;
+
+  --font-display: var(--font-instrument-serif), serif;
+  --font-body: var(--font-hanken-grotesk), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-base);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-dark);
+}
+
+/* Hero scroll indicator dot */
+@keyframes scrollDot {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Reusable frosted-glass layer — blur + radial mask so the edges
+ * fade out (never looks like a box). Sits BEHIND the text.
+ * ------------------------------------------------------------------ */
+.frosted {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 30px;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  background: rgba(8, 10, 14, 0.3);
+  -webkit-mask-image: radial-gradient(
+    120% 115% at 38% 50%,
+    #000 56%,
+    transparent 92%
+  );
+  mask-image: radial-gradient(120% 115% at 38% 50%, #000 56%, transparent 92%);
+}
+
+.frosted-hero {
+  border-radius: 26px;
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  background: linear-gradient(
+    100deg,
+    rgba(8, 10, 14, 0.44),
+    rgba(8, 10, 14, 0.18) 58%,
+    rgba(8, 10, 14, 0) 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    130% 125% at 10% 50%,
+    #000 44%,
+    transparent 86%
+  );
+  mask-image: radial-gradient(130% 125% at 10% 50%, #000 44%, transparent 86%);
+}
+
+/* Section hairline gradient */
+.hairline {
+  background: linear-gradient(
+    90deg,
+    rgba(43, 217, 255, 0.5),
+    rgba(255, 255, 255, 0.12) 40%,
+    transparent
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ * Accessibility — visible focus + reduced motion.
+ * When the user prefers reduced motion we disable transitions,
+ * the scroll indicator, and smooth scrolling. The Background3D
+ * component reads the same media query to freeze the 3D scene.
+ * ------------------------------------------------------------------ */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

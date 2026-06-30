@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" fill="none">
+  <defs>
+    <pattern id="stripes" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(135)">
+      <rect width="20" height="40" fill="rgba(43,217,255,0.055)"/>
+      <rect x="20" width="20" height="40" fill="rgba(43,217,255,0.015)"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="#080a0e"/>
+  <rect width="800" height="600" fill="url(#stripes)"/>
+  <text x="400" y="300" text-anchor="middle" dominant-baseline="middle"
+    font-family="'JetBrains Mono', monospace" font-size="18" letter-spacing="1"
+    fill="#5f97ad">screenshot — escuta...</text>
+</svg>
