@@ -160,7 +160,7 @@ function Scene({
         </points>
         {/* cyan connecting lines */}
         <lineSegments geometry={edgeGeo}>
-          <lineBasicMaterial color={0x2bd9ff} transparent opacity={0.34} />
+          <lineBasicMaterial color={0x5a8cff} transparent opacity={0.34} />
         </lineSegments>
         {/* dark inner sphere for depth */}
         <mesh>

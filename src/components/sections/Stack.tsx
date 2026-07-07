@@ -44,7 +44,7 @@ export function Stack() {
       id="stack"
       className="relative mx-auto max-w-[1240px] px-[clamp(24px,5vw,72px)] py-[clamp(70px,9vh,120px)]"
     >
-      <SectionHeader number="03" labelKey="sec.stack" />
+      <SectionHeader number="05" labelKey="sec.stack" />
 
       <div className="grid grid-cols-1 gap-[clamp(28px,4vw,64px)] sm:grid-cols-3">
         {COLUMNS.map((col) => (

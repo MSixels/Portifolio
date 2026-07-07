@@ -9,8 +9,8 @@
   --color-muted: #aeb6c2;
   --color-muted-2: #7e8794;
   --color-muted-3: #5c6573;
-  --color-accent: #2bd9ff;
-  --color-accent-2: #5a8cff;
+  --color-accent: #5a8cff;
+  --color-accent-2: #2bd9ff;
   --color-node: #9fe8ff;
   --color-star: #9fd8ff;
   --color-dark: #04060a;
@@ -98,7 +98,7 @@ body {
 .hairline {
   background: linear-gradient(
     90deg,
-    rgba(43, 217, 255, 0.5),
+    rgba(90, 140, 255, 0.5),
     rgba(255, 255, 255, 0.12) 40%,
     transparent
   );

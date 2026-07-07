@@ -12,8 +12,8 @@ export function Overlay() {
         background: [
           "linear-gradient(95deg, rgba(8,10,14,0.82) 0%, rgba(8,10,14,0.52) 30%, rgba(8,10,14,0.12) 52%, rgba(8,10,14,0) 66%)",
           "radial-gradient(125% 95% at 50% 45%, transparent 38%, rgba(6,8,11,0.6) 100%)",
-          "radial-gradient(120% 80% at 72% 8%, rgba(43,217,255,0.07), transparent 55%)",
-          "radial-gradient(100% 90% at 8% 100%, rgba(90,140,255,0.05), transparent 50%)",
+          "radial-gradient(120% 80% at 72% 8%, rgba(90,140,255,0.07), transparent 55%)",
+          "radial-gradient(100% 90% at 8% 100%, rgba(43,217,255,0.05), transparent 50%)",
         ].join(","),
       }}
     />

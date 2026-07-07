@@ -56,7 +56,7 @@ export function TiltCard({
         100
       ).toFixed(1)}% ${((py + 0.5) * 100).toFixed(
         1
-      )}%, rgba(43,217,255,0.18), transparent 60%)`;
+      )}%, rgba(90,140,255,0.18), transparent 60%)`;
     }
   };
 

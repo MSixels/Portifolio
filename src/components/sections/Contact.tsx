@@ -35,7 +35,7 @@ export function Contact() {
       id="contato"
       className="relative mx-auto max-w-[1240px] px-[clamp(24px,5vw,72px)] pb-[clamp(60px,8vh,100px)] pt-[clamp(80px,11vh,150px)]"
     >
-      <SectionHeader number="05" labelKey="sec.contact" />
+      <SectionHeader number="09" labelKey="sec.contact" />
 
       <Reveal delay={60}>
         <h2 className="max-w-[16ch] font-display text-[clamp(40px,7vw,96px)] font-normal leading-[1.02] tracking-[-1px] text-ink">
@@ -59,7 +59,7 @@ export function Contact() {
             {...(link.external
               ? { target: "_blank", rel: "noopener noreferrer" }
               : {})}
-            className={`flex items-center gap-3 rounded-[14px] border border-white/[0.14] px-[24px] py-[18px] no-underline transition-[border-color,background] duration-[250ms] hover:border-[rgba(43,217,255,0.55)] hover:bg-[rgba(43,217,255,0.05)] ${
+            className={`flex items-center gap-3 rounded-[14px] border border-white/[0.14] px-[24px] py-[18px] no-underline transition-[border-color,background] duration-[250ms] hover:border-[rgba(90,140,255,0.55)] hover:bg-[rgba(90,140,255,0.05)] ${
               link.min ? "min-w-[240px]" : ""
             }`}
           >
