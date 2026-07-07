@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useI18n } from "@/i18n/I18nProvider";
 import { TiltCard } from "./TiltCard";
 
@@ -307,13 +308,23 @@ function CtaButton({
     );
   }
 
-  const isInternal = href.startsWith("/");
-  const externalProps = isInternal
-    ? {}
-    : { target: "_blank", rel: "noopener noreferrer" };
+  // Internal routes navigate in-app via next/link; external URLs open safely
+  // in a new tab.
+  if (href.startsWith("/")) {
+    return (
+      <Link href={href} className={`${base} ${styles}`}>
+        {content}
+      </Link>
+    );
+  }
 
   return (
-    <a href={href} {...externalProps} className={`${base} ${styles}`}>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${base} ${styles}`}
+    >
       {content}
     </a>
   );
