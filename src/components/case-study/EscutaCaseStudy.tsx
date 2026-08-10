@@ -6,13 +6,15 @@ import { LANGS, useI18n, type Lang } from "@/i18n/I18nProvider";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Footer } from "@/components/sections/Footer";
+import { ArchitectureDiagram } from "./ArchitectureDiagram";
+import { CodeBlock } from "./CodeBlock";
+import { GO_HEALTH, SQL_INDEX, SQL_SCHEMA } from "./snippets";
 
 /* ------------------------------------------------------------------ *
- * External links. The repo string mirrors the project card verbatim
- * (trailing dots intentional). Swap LIVE_URL for the real production
- * URL once the platform is deployed.
+ * External links. The escuta… repository is private (clinical product),
+ * so no "Ver código" CTA is rendered at all. Swap LIVE_URL for the real
+ * production URL once the platform is deployed.
  * ------------------------------------------------------------------ */
-const REPO_URL = "https://github.com/MSixels/gestao-clinica-escuta...";
 const LIVE_URL = "https://escuta-app.vercel.app"; // TODO: real deploy URL.
 
 /* Data-driven sections — text lives in i18n so PT/EN/ES stay in sync. */
@@ -25,27 +27,36 @@ const ARCH = [
 
 const CHALLENGES = [
   {
-    titleKey: "case.chal.perf.title",
-    problemKey: "case.chal.perf.problem",
-    solutionKey: "case.chal.perf.solution",
+    titleKey: "case.chal.avail.title",
+    problemKey: "case.chal.avail.problem",
+    solutionKey: "case.chal.avail.solution",
   },
   {
-    titleKey: "case.chal.token.title",
-    problemKey: "case.chal.token.problem",
-    solutionKey: "case.chal.token.solution",
+    titleKey: "case.chal.billing.title",
+    problemKey: "case.chal.billing.problem",
+    solutionKey: "case.chal.billing.solution",
   },
   {
-    titleKey: "case.chal.sync.title",
-    problemKey: "case.chal.sync.problem",
-    solutionKey: "case.chal.sync.solution",
+    titleKey: "case.chal.currency.title",
+    problemKey: "case.chal.currency.problem",
+    solutionKey: "case.chal.currency.solution",
   },
 ] as const;
 
+/* Screenshot ↔ caption mapping, verified against the actual PNGs.
+ *
+ * shot-2 = dashboard · shot-3 = agenda · shot-4 = comunidade
+ * shot-1 = public landing page (closed beta)
+ *
+ * <!-- print faltando --> Prontuário/anamnese
+ * <!-- print faltando --> Autenticação (login)
+ * Add the files as shot-5/shot-6 and append two entries here; the i18n
+ * keys case.shot.5.* / case.shot.6.* still need to be written. */
 const SHOTS = [
-  { src: "/projects/escuta/shot-1.png", titleKey: "case.shot.1.title", capKey: "case.shot.1.cap" },
-  { src: "/projects/escuta/shot-2.png", titleKey: "case.shot.2.title", capKey: "case.shot.2.cap" },
-  { src: "/projects/escuta/shot-3.png", titleKey: "case.shot.3.title", capKey: "case.shot.3.cap" },
-  { src: "/projects/escuta/shot-4.png", titleKey: "case.shot.4.title", capKey: "case.shot.4.cap" },
+  { src: "/projects/escuta/shot-2.png", titleKey: "case.shot.1.title", capKey: "case.shot.1.cap" },
+  { src: "/projects/escuta/shot-3.png", titleKey: "case.shot.2.title", capKey: "case.shot.2.cap" },
+  { src: "/projects/escuta/shot-4.png", titleKey: "case.shot.3.title", capKey: "case.shot.3.cap" },
+  { src: "/projects/escuta/shot-1.png", titleKey: "case.shot.4.title", capKey: "case.shot.4.cap" },
 ] as const;
 
 export function EscutaCaseStudy() {
@@ -180,15 +191,8 @@ function Header() {
             <ExternalIcon />
             {t("case.cta.live")}
           </a>
-          <a
-            href={REPO_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-[9px] rounded-[12px] border border-white/[0.16] px-[22px] py-[13px] text-[14px] font-medium text-ink no-underline transition-[border-color,background] duration-[220ms] hover:border-[rgba(90,140,255,0.55)] hover:bg-[rgba(90,140,255,0.05)]"
-          >
-            <GithubIcon />
-            {t("proj.cta.code")}
-          </a>
+          {/* No "Ver código" CTA: the repository is private, and a link that
+              404s for a recruiter is worse than no link. */}
         </div>
       </Reveal>
     </header>
@@ -269,7 +273,84 @@ function ArchitectureSection() {
           </article>
         ))}
       </div>
+
+      <DeepDive />
     </Section>
+  );
+}
+
+/* ---- Diagram + schema + real source excerpts, all read-only ---- */
+function DeepDive() {
+  const { t } = useI18n();
+
+  return (
+    <div className="mt-[clamp(38px,5vw,60px)] flex flex-col gap-[clamp(30px,4vw,48px)]">
+      <figure className="m-0">
+        <SubHead title={t("case.diagram.title")} />
+        <div className="overflow-x-auto rounded-[18px] border border-white/10 bg-[rgba(4,6,10,0.5)] p-[clamp(16px,2.4vw,28px)]">
+          <ArchitectureDiagram
+            title={t("case.diagram.title")}
+            labels={{
+              front: t("case.diagram.role.front"),
+              api: t("case.diagram.role.api"),
+              db: t("case.diagram.role.db"),
+              edge: t("case.diagram.role.edge"),
+            }}
+          />
+        </div>
+        <figcaption className="mt-[14px] max-w-[70ch] text-[14px] font-light leading-[1.65] text-muted">
+          {t("case.diagram.caption")}
+        </figcaption>
+      </figure>
+
+      <figure className="m-0">
+        <SubHead title={t("case.schema.title")} />
+        <CodeBlock
+          code={SQL_SCHEMA}
+          lang="sql"
+          filename="migrations/0001_core.sql"
+          label={t("case.schema.title")}
+        />
+        <figcaption className="mt-[14px] max-w-[70ch] text-[14px] font-light leading-[1.65] text-muted">
+          {t("case.schema.caption")}
+        </figcaption>
+      </figure>
+
+      <figure className="m-0">
+        <SubHead title={t("case.code.sql.title")} />
+        <CodeBlock
+          code={SQL_INDEX}
+          lang="sql"
+          filename="migrations/0007_stripe_customer_unique.sql"
+          label={t("case.code.sql.title")}
+        />
+        <figcaption className="mt-[14px] max-w-[70ch] text-[14px] font-light leading-[1.65] text-muted">
+          {t("case.code.sql.caption")}
+        </figcaption>
+      </figure>
+
+      <figure className="m-0">
+        <SubHead title={t("case.code.go.title")} />
+        <CodeBlock
+          code={GO_HEALTH}
+          lang="go"
+          filename="cmd/api/main.go"
+          label={t("case.code.go.title")}
+        />
+        <figcaption className="mt-[14px] max-w-[70ch] text-[14px] font-light leading-[1.65] text-muted">
+          {t("case.code.go.caption")}
+        </figcaption>
+      </figure>
+    </div>
+  );
+}
+
+function SubHead({ title }: { title: string }) {
+  return (
+    <h3 className="mb-[16px] flex items-center gap-[12px] font-mono text-[11px] uppercase tracking-[2.5px] text-accent">
+      <span aria-hidden className="h-px w-[26px] bg-[rgba(90,140,255,0.55)]" />
+      {title}
+    </h3>
   );
 }
 
@@ -372,10 +453,3 @@ function ExternalIcon() {
   );
 }
 
-function GithubIcon() {
-  return (
-    <svg aria-hidden width="15" height="15" viewBox="0 0 16 16" fill="currentColor">
-      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" />
-    </svg>
-  );
-}
