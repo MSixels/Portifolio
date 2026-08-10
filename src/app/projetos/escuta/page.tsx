@@ -12,8 +12,10 @@ export const metadata: Metadata = {
 export default function EscutaCaseStudyPage() {
   return (
     <>
-      {/* z-0: fixed 3D canvas — z-1: scrim/vignette overlay (same chrome as home) */}
-      <Background3D />
+      {/* z-0: fixed 3D canvas — z-1: scrim/vignette overlay (same chrome as
+          home, but the sphere runs in `soft` mode: this page is long-form
+          text and the background must stay out of the way of reading). */}
+      <Background3D mode="soft" />
       <Overlay />
 
       {/* z-2: page content */}
