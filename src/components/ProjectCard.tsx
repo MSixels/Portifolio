@@ -26,11 +26,12 @@ export type Project = {
   /** i18n key for the "Problem & Technical solution" body copy. */
   descKey: string;
   /** Primary CTA URL. Internal routes ("/…") navigate in-app; external URLs
-      open in a new tab. Omit to render the CTA in a disabled state. */
+      open in a new tab. Omit to hide the CTA entirely. */
   demoUrl?: string;
   /** Optional i18n key overriding the primary CTA label (defaults to demo). */
   demoLabelKey?: string;
-  /** Source repository URL — omit to render the CTA disabled. */
+  /** Source repository URL — omit to hide the CTA (private repos included:
+      a dead or greyed-out button reads worse to a recruiter than none). */
   repoUrl?: string;
   /** Optional single screenshot. When present the card uses a 2-column layout. */
   image?: { src: string; altKey: string };
@@ -151,21 +152,24 @@ export function ProjectCard({
               ))}
             </div>
 
-            {/* Call-to-action buttons — side by side, stack on narrow screens */}
-            <div className="mt-auto flex flex-col gap-[10px] pt-[28px] sm:flex-row">
-              <CtaButton
-                href={project.demoUrl}
-                label={t(project.demoLabelKey ?? "proj.cta.demo")}
-                variant="primary"
-                icon={primaryInternal ? "arrow" : "external"}
-              />
-              <CtaButton
-                href={project.repoUrl}
-                label={t("proj.cta.code")}
-                variant="ghost"
-                icon="github"
-              />
-            </div>
+            {/* Call-to-action buttons — side by side, stack on narrow screens.
+                The whole row disappears when a project has no public links. */}
+            {project.demoUrl || project.repoUrl ? (
+              <div className="mt-auto flex flex-col gap-[10px] pt-[28px] sm:flex-row">
+                <CtaButton
+                  href={project.demoUrl}
+                  label={t(project.demoLabelKey ?? "proj.cta.demo")}
+                  variant="primary"
+                  icon={primaryInternal ? "arrow" : "external"}
+                />
+                <CtaButton
+                  href={project.repoUrl}
+                  label={t("proj.cta.code")}
+                  variant="ghost"
+                  icon="github"
+                />
+              </div>
+            ) : null}
           </div>
 
           {/* ---- Media column (carousel takes priority over single image) ---- */}
@@ -267,9 +271,9 @@ function Carousel({
 }
 
 /* ------------------------------------------------------------------ *
- * CTA button — renders a real link when a URL is provided, otherwise a
- * disabled placeholder so the layout is always complete. Internal routes
- * ("/…") navigate in-app; external URLs open safely in a new tab.
+ * CTA button — renders a real link when a URL is provided and nothing at all
+ * otherwise, so no card ever ships a dead button. Internal routes ("/…")
+ * navigate in-app; external URLs open safely in a new tab.
  * ------------------------------------------------------------------ */
 function CtaButton({
   href,
@@ -297,16 +301,7 @@ function CtaButton({
     </>
   );
 
-  if (!href) {
-    return (
-      <span
-        aria-disabled
-        className={`${base} ${styles} cursor-not-allowed opacity-40`}
-      >
-        {content}
-      </span>
-    );
-  }
+  if (!href) return null;
 
   // Internal routes navigate in-app via next/link; external URLs open safely
   // in a new tab.

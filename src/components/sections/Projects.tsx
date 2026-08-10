@@ -21,13 +21,15 @@ const FEATURED: Project = {
   // Primary CTA → dedicated internal detail route (opens in-app, not a new tab).
   demoUrl: "/projetos/escuta",
   demoLabelKey: "proj.cta.details",
-  repoUrl: "https://github.com/MSixels/gestao-clinica-escuta...",
+  // The escuta… repository is private (clinical product), so no "Ver código"
+  // CTA is rendered — omitting `repoUrl` hides the button entirely.
+  repoUrl: undefined,
   // Product screenshots rendered as a carousel in the right column.
   carousel: [
-    { src: "/projects/escuta/shot-1.png", altKey: "proj.shot" },
     { src: "/projects/escuta/shot-2.png", altKey: "proj.shot" },
     { src: "/projects/escuta/shot-3.png", altKey: "proj.shot" },
     { src: "/projects/escuta/shot-4.png", altKey: "proj.shot" },
+    { src: "/projects/escuta/shot-1.png", altKey: "proj.shot" },
   ],
 };
 
@@ -38,15 +40,6 @@ const PROJECTS: Project[] = [
     status: "done",
     tags: ["React", "TypeScript", "CoinGecko API"],
     descKey: "proj.soontxt",
-    demoUrl: undefined,
-    repoUrl: undefined,
-  },
-  {
-    id: "proj-b",
-    titleKey: "proj.soon2",
-    status: "oss",
-    tags: ["Go", "PostgreSQL", "Docker"],
-    descKey: "proj.soontxt2",
     demoUrl: undefined,
     repoUrl: undefined,
   },
