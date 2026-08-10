@@ -8,15 +8,24 @@ import { SectionFrost } from "../Overlay";
 const LINKEDIN_URL = "https://www.linkedin.com/in/dev-matheus-sixel";
 
 /* ------------------------------------------------------------------ *
- * Vertical timeline. Each entry is a placeholder for a role/milestone
- * with a date, short description and a subtle LinkedIn link. A single
- * gradient rail runs behind the dots; content is offset with left
- * padding so the dots sit on the rail.
+ * Vertical timeline. Each entry is a role/milestone with a date, short
+ * description and a subtle LinkedIn link. A single gradient rail runs
+ * behind the dots; content is offset with left padding so the dots sit
+ * on the rail.
+ *
+ * Only real, verifiable entries are listed — a public timeline padded
+ * with placeholder roles costs more credibility than a short one. The
+ * remaining slots stay commented out until they can be filled in:
+ *
+ *   <!-- Matheus preencher -->
+ *   { roleKey: "exp.e2.role", dateKey: "exp.e2.date", descKey: "exp.e2.desc" },
+ *   <!-- Matheus preencher -->
+ *   { roleKey: "exp.e3.role", dateKey: "exp.e3.date", descKey: "exp.e3.desc" },
+ *
+ * To activate one: uncomment the line and add exp.eN.* to pt/en/es.json.
  * ------------------------------------------------------------------ */
 const ENTRIES = [
   { roleKey: "exp.e1.role", dateKey: "exp.e1.date", descKey: "exp.e1.desc" },
-  { roleKey: "exp.e2.role", dateKey: "exp.e2.date", descKey: "exp.e2.desc" },
-  { roleKey: "exp.e3.role", dateKey: "exp.e3.date", descKey: "exp.e3.desc" },
 ];
 
 export function Experience() {

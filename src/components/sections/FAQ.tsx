@@ -8,13 +8,13 @@ import { SectionFrost } from "../Overlay";
 
 const EASE_OUT_CUBIC = [0.215, 0.61, 0.355, 1] as const;
 
+/* Aimed at a hiring manager, not a freelance client: position, stack,
+ * delivery method, end-to-end ownership. */
 const ITEMS = [
   { id: "faq-1", qKey: "faq.q1", aKey: "faq.a1" },
   { id: "faq-2", qKey: "faq.q2", aKey: "faq.a2" },
   { id: "faq-3", qKey: "faq.q3", aKey: "faq.a3" },
   { id: "faq-4", qKey: "faq.q4", aKey: "faq.a4" },
-  { id: "faq-5", qKey: "faq.q5", aKey: "faq.a5" },
-  { id: "faq-6", qKey: "faq.q6", aKey: "faq.a6" },
 ];
 
 /**
