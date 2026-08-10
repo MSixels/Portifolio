@@ -14,6 +14,15 @@ const R = 2.05;
 const NODE_COUNT = 78;
 const GOLDEN_ANGLE = 2.399963; // ~ pi * (3 - sqrt(5))
 
+/**
+ * Page background token (`--color-base` in globals.css). The inner occluder
+ * MUST be painted with this exact value: any darker/bluer colour turns the
+ * core of the sphere into a visible black plate that appears to "breathe"
+ * as the lattice sweeps across it. Painted with the page colour it blends
+ * into the backdrop and only hides the far side of the network.
+ */
+const BASE_COLOR = 0x080a0e;
+
 function useNetworkGeometry() {
   return useMemo(() => {
     const verts: THREE.Vector3[] = [];
@@ -149,24 +158,36 @@ function Scene({
   return (
     <>
       <group ref={groupRef}>
-        {/* light nodes */}
-        <points geometry={nodeGeo}>
+        {/* Inner occluder — drawn FIRST (renderOrder 0) so it fills the depth
+            buffer; the nodes/lines below then depth-test against it and only
+            the front half of the network survives. Colour is the page
+            background token and neither opacity nor scale is ever animated,
+            so the core can never darken into a pulsing black disc. */}
+        <mesh renderOrder={0}>
+          <sphereGeometry args={[R * 0.94, 28, 20]} />
+          <meshBasicMaterial color={BASE_COLOR} transparent opacity={0.42} />
+        </mesh>
+        {/* light nodes — depthWrite off so they never punch holes in the
+            occluder; explicit renderOrder keeps the draw order deterministic
+            (no sort flicker between the three co-located objects). */}
+        <points geometry={nodeGeo} renderOrder={1}>
           <pointsMaterial
             color={0x9fe8ff}
             size={0.075}
             transparent
             opacity={0.95}
+            depthWrite={false}
           />
         </points>
         {/* cyan connecting lines */}
-        <lineSegments geometry={edgeGeo}>
-          <lineBasicMaterial color={0x5a8cff} transparent opacity={0.34} />
+        <lineSegments geometry={edgeGeo} renderOrder={1}>
+          <lineBasicMaterial
+            color={0x5a8cff}
+            transparent
+            opacity={0.34}
+            depthWrite={false}
+          />
         </lineSegments>
-        {/* dark inner sphere for depth */}
-        <mesh>
-          <sphereGeometry args={[R * 0.94, 28, 20]} />
-          <meshBasicMaterial color={0x07151f} transparent opacity={0.42} />
-        </mesh>
       </group>
 
       {showStars ? (
@@ -183,9 +204,24 @@ function Scene({
   );
 }
 
-export function Background3D() {
+/**
+ * How loud the background is allowed to be:
+ * - `hero-fade` (home): full strength behind the hero, fading to the soft
+ *   floor across the first viewport so About/Experiência/FAQ/Contato read
+ *   against a calm backdrop.
+ * - `soft` (case study): pinned at the floor from the first pixel — that page
+ *   is dense long-form text and the sphere must not compete with it.
+ */
+export type Background3DMode = "hero-fade" | "soft";
+
+export function Background3D({
+  mode = "hero-fade",
+}: {
+  mode?: Background3DMode;
+}) {
   const reduceMotion = useReducedMotion() ?? false;
   const [isMobile, setIsMobile] = useState(false);
+  const shellRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 768px)");
@@ -197,13 +233,40 @@ export function Background3D() {
 
   // On narrow screens the 3D is more subtle: fewer stars, lower opacity.
   const starCount = isMobile ? 420 : 950;
-  const opacity = isMobile ? 0.55 : 0.92;
+  const strong = isMobile ? 0.55 : 0.92;
+  const soft = isMobile ? 0.1 : 0.16;
+
+  // Opacity is written straight to the node instead of going through state:
+  // this runs on every scroll frame and must not re-render the Canvas tree.
+  useEffect(() => {
+    const shell = shellRef.current;
+    if (!shell) return;
+
+    if (mode === "soft") {
+      shell.style.opacity = String(soft);
+      return;
+    }
+
+    const update = () => {
+      const span = window.innerHeight * 0.85 || 1;
+      const p = Math.min(window.scrollY / span, 1);
+      shell.style.opacity = String(strong + (soft - strong) * p);
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [mode, strong, soft]);
 
   return (
     <div
+      ref={shellRef}
       aria-hidden
       className="pointer-events-none fixed inset-0 z-0"
-      style={{ opacity }}
+      style={{ opacity: mode === "soft" ? soft : strong }}
     >
       <Canvas
         gl={{ alpha: true, antialias: true }}
