@@ -1,0 +1,20 @@
+# Binary assets must never go through end-of-line normalization.
+#
+# core.autocrlf is true on the dev machine and git's heuristic classified
+# public/cv-en.pdf as text (a small, mostly-ASCII PDF has no NUL bytes near
+# the start). Without this file, a fresh clone on Windows would rewrite LF
+# as CRLF inside the PDF stream and hand a corrupted CV to whoever opened it.
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.avif  binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.mp4   binary
+*.webm  binary
