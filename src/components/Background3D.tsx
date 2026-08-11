@@ -6,22 +6,14 @@ import { useReducedMotion } from "framer-motion";
 import * as THREE from "three";
 
 /* ------------------------------------------------------------------ *
- * "Rede" — network sphere: ~78 Fibonacci nodes drawn as light points,
- * cyan lines connecting nearby nodes, and a dark inner sphere for depth.
- * Exact parameters from the prototype.
+ * "Rede" — network sphere: ~78 Fibonacci nodes drawn as light points and
+ * cyan lines connecting nearby nodes. The globe is hollow: there is no
+ * inner mesh, so the far side of the lattice and the star field behind it
+ * both show through the middle.
  * ------------------------------------------------------------------ */
 const R = 2.05;
 const NODE_COUNT = 78;
 const GOLDEN_ANGLE = 2.399963; // ~ pi * (3 - sqrt(5))
-
-/**
- * Page background token (`--color-base` in globals.css). The inner occluder
- * MUST be painted with this exact value: any darker/bluer colour turns the
- * core of the sphere into a visible black plate that appears to "breathe"
- * as the lattice sweeps across it. Painted with the page colour it blends
- * into the backdrop and only hides the far side of the network.
- */
-const BASE_COLOR = 0x080a0e;
 
 function useNetworkGeometry() {
   return useMemo(() => {
@@ -158,34 +150,30 @@ function Scene({
   return (
     <>
       <group ref={groupRef}>
-        {/* Inner occluder — drawn FIRST (renderOrder 0) so it fills the depth
-            buffer; the nodes/lines below then depth-test against it and only
-            the front half of the network survives. Colour is the page
-            background token and neither opacity nor scale is ever animated,
-            so the core can never darken into a pulsing black disc. */}
-        <mesh renderOrder={0}>
-          <sphereGeometry args={[R * 0.94, 28, 20]} />
-          <meshBasicMaterial color={BASE_COLOR} transparent opacity={0.42} />
-        </mesh>
-        {/* light nodes — depthWrite off so they never punch holes in the
-            occluder; explicit renderOrder keeps the draw order deterministic
-            (no sort flicker between the three co-located objects). */}
-        <points geometry={nodeGeo} renderOrder={1}>
+        {/* Both materials are additive with depthWrite off, so front and back
+            of the globe draw unconditionally and simply accumulate light —
+            nothing occludes anything, which is what makes the sphere read as
+            hollow wireframe instead of a filled ball. Opacities are pulled
+            down from the occluder-era values because additive blending stacks
+            wherever the near and far halves overlap. */}
+        <points geometry={nodeGeo}>
           <pointsMaterial
             color={0x9fe8ff}
             size={0.075}
             transparent
-            opacity={0.95}
+            opacity={0.7}
             depthWrite={false}
+            blending={THREE.AdditiveBlending}
           />
         </points>
         {/* cyan connecting lines */}
-        <lineSegments geometry={edgeGeo} renderOrder={1}>
+        <lineSegments geometry={edgeGeo}>
           <lineBasicMaterial
             color={0x5a8cff}
             transparent
-            opacity={0.34}
+            opacity={0.22}
             depthWrite={false}
+            blending={THREE.AdditiveBlending}
           />
         </lineSegments>
       </group>
