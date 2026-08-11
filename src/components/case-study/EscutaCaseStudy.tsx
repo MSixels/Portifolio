@@ -43,20 +43,18 @@ const CHALLENGES = [
   },
 ] as const;
 
-/* Screenshot ↔ caption mapping, verified against the actual PNGs.
+/* Screenshot ↔ caption mapping. The walkthrough follows the product from
+ * the daily overview down into a single consultation and its access
+ * control: dashboard → agenda → prontuário → autenticação.
  *
- * shot-2 = dashboard · shot-3 = agenda · shot-4 = comunidade
- * shot-1 = public landing page (closed beta)
- *
- * <!-- print faltando --> Prontuário/anamnese
- * <!-- print faltando --> Autenticação (login)
- * Add the files as shot-5/shot-6 and append two entries here; the i18n
- * keys case.shot.5.* / case.shot.6.* still need to be written. */
+ * The comunidade and public-landing shots (shot-4/shot-1) are no longer
+ * part of this section; they still run in the carousel of the project
+ * card on the home page. */
 const SHOTS = [
   { src: "/projects/escuta/shot-2.png", titleKey: "case.shot.1.title", capKey: "case.shot.1.cap" },
   { src: "/projects/escuta/shot-3.png", titleKey: "case.shot.2.title", capKey: "case.shot.2.cap" },
-  { src: "/projects/escuta/shot-4.png", titleKey: "case.shot.3.title", capKey: "case.shot.3.cap" },
-  { src: "/projects/escuta/shot-1.png", titleKey: "case.shot.4.title", capKey: "case.shot.4.cap" },
+  { src: "/projects/escuta/prontuario.png", titleKey: "case.shot.3.title", capKey: "case.shot.3.cap" },
+  { src: "/projects/escuta/login.png", titleKey: "case.shot.4.title", capKey: "case.shot.4.cap" },
 ] as const;
 
 export function EscutaCaseStudy() {
