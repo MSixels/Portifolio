@@ -40,8 +40,8 @@ const PROJECTS: Project[] = [
     status: "done",
     tags: ["React", "TypeScript", "CoinGecko API"],
     descKey: "proj.soontxt",
-    demoUrl: undefined,
-    repoUrl: undefined,
+    demoUrl: "https://cryptoplace-eosin.vercel.app/",
+    repoUrl: "https://github.com/MSixels/Cryptoplace",
   },
 ];
 
