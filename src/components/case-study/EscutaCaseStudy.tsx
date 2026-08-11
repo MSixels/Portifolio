@@ -15,7 +15,7 @@ import { GO_HEALTH, SQL_INDEX, SQL_SCHEMA } from "./snippets";
  * so no "Ver código" CTA is rendered at all. Swap LIVE_URL for the real
  * production URL once the platform is deployed.
  * ------------------------------------------------------------------ */
-const LIVE_URL = "https://escuta-app.vercel.app"; // TODO: real deploy URL.
+const LIVE_URL = "https://escutaclinica.app";
 
 /* Data-driven sections — text lives in i18n so PT/EN/ES stay in sync. */
 const ARCH = [
