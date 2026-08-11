@@ -2,6 +2,19 @@
 
 import { LANGS, useI18n, type Lang } from "@/i18n/I18nProvider";
 
+/* CV file per locale. Typed as an exhaustive Record<Lang, …> so adding a
+   language to LANGS fails the build here instead of silently shipping a
+   dead link — which is why there is no fallback path. Spanish points at
+   the English CV on purpose: there is no ES version. */
+const CV_BY_LANG: Record<Lang, string> = {
+  pt: "/cv-pt.pdf",
+  en: "/cv-en.pdf",
+  es: "/cv-en.pdf",
+};
+
+/* Filename the browser saves as, regardless of which file was fetched. */
+const CV_FILENAME = "Matheus_Sixel_CV.pdf";
+
 const NAV_LINKS: { key: string; href: string }[] = [
   { key: "nav.about", href: "#sobre" },
   { key: "nav.work", href: "#projetos" },
@@ -50,10 +63,11 @@ export function Nav() {
           ))}
         </div>
 
-        {/* Persistent CV download — visible on every breakpoint */}
+        {/* Persistent CV download — visible on every breakpoint, and the
+            file follows whichever language the switcher is on. */}
         <a
-          href="/cv.pdf"
-          download
+          href={CV_BY_LANG[lang]}
+          download={CV_FILENAME}
           className="inline-flex items-center gap-[7px] rounded-full border border-[rgba(90,140,255,0.4)] bg-[rgba(90,140,255,0.06)] px-[14px] py-[8px] font-mono text-[11px] uppercase tracking-[1px] text-accent no-underline transition-colors duration-[220ms] hover:border-[rgba(90,140,255,0.7)] hover:bg-[rgba(90,140,255,0.12)]"
         >
           <svg
