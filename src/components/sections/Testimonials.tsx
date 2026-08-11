@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useI18n } from "@/i18n/I18nProvider";
 import { Reveal } from "../Reveal";
 import { SectionHeader } from "../SectionHeader";
 import { SectionFrost } from "../Overlay";
@@ -8,7 +9,12 @@ import { TiltCard } from "../TiltCard";
 
 /* Real LinkedIn recommendation. Hardcoded on purpose: the quote is an
    authentic PT statement (not machine-translated) and the name/role are
-   proper data, so they stay identical across every locale. */
+   proper data, so they stay identical across every locale.
+
+   <!-- Matheus: 2º depoimento (cliente) -->
+   When a client recommendation arrives, turn TESTIMONIAL into an array and
+   map over it — the wrapper below already centers a single card, so a
+   second one only needs the grid, not a rewrite of the card itself. */
 const TESTIMONIAL = {
   name: "Victor Sixel",
   role: "Product Designer @ Itaú (NTT Data) | UX/UI | Banking | User-Centered & Data Driven Design",
@@ -19,12 +25,16 @@ const TESTIMONIAL = {
 };
 
 export function Testimonials() {
+  const { t } = useI18n();
+
   return (
     <section
       id="depoimentos"
       className="relative mx-auto max-w-[1240px] px-[clamp(24px,5vw,72px)] py-[clamp(70px,9vh,120px)]"
     >
-      <SectionHeader number="06" labelKey="sec.words" extraKey="words.edit" />
+      {/* No `extraKey`: it rendered an "espaço reservado — edite" note next
+          to the section title, in production, beside a real recommendation. */}
+      <SectionHeader number="06" labelKey="sec.words" />
 
       {/* Single featured recommendation — centered, premium, deep-cyan glow. */}
       <Reveal delay={40} className="mx-auto w-full max-w-[760px]">
@@ -82,7 +92,7 @@ export function Testimonials() {
               rel="noopener noreferrer"
               className="group/link inline-flex shrink-0 items-center gap-[6px] font-mono text-[12px] uppercase tracking-[1.5px] text-accent no-underline transition-colors duration-[200ms] hover:text-[#8fb0ff]"
             >
-              Ver no LinkedIn
+              {t("exp.linkedin")}
               <span
                 aria-hidden
                 className="transition-transform duration-[200ms] group-hover/link:translate-x-[2px] group-hover/link:-translate-y-[2px]"
