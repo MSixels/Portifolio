@@ -9,7 +9,6 @@ import { Experience } from "@/components/sections/Experience";
 import { Stack } from "@/components/sections/Stack";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { FAQ } from "@/components/sections/FAQ";
-import { StartProject } from "@/components/sections/StartProject";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 
@@ -32,7 +31,6 @@ export default function Home() {
           <Stack />
           <Testimonials />
           <FAQ />
-          <StartProject />
           <Contact />
         </main>
         <Footer />
