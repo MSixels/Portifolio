@@ -39,7 +39,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Matheus Sixel — Desenvolvedor Fullstack",
+  title: SITE_TITLE,
   description: SITE_DESCRIPTION,
   openGraph: baseOpenGraph,
   twitter: {
