@@ -121,9 +121,16 @@
 
   "sec.experience": "Experiencia",
   "exp.linkedin": "Ver en LinkedIn",
-  "exp.e1.role": "Desarrollador Full-Stack (freelance)",
+  "exp.caseStudy": "Ver estudio de caso",
+  "exp.e1.role": "Desarrollador Full-Stack · escuta… (proyecto propio)",
   "exp.e1.date": "2025 — Actual",
-  "exp.e1.desc": "escuta…, SaaS B2B de gestión clínica (Go, PostgreSQL, Next.js, Stripe): de la arquitectura al despliegue.",
+  "exp.e1.desc": "SaaS B2B multi-tenant para la gestión de consultorios — agenda, historias clínicas y cobro. Front-end en Next.js, TypeScript, Tailwind y Shadcn; back-end en Go (APIs REST) y PostgreSQL (Supabase con RLS). Desplegado en producción (Vercel/Render), con tratamiento de latencia de base de datos y cumplimiento de la LGPD, la ley brasileña de protección de datos.",
+  "exp.e2.role": "Líder de Front-End · CRM Educativo (freelance)",
+  "exp.e2.date": "Sep 2024 — May 2025",
+  "exp.e2.desc": "Lideré el front-end de un CRM educativo completo y coordiné un equipo de 3 desarrolladores (code review, Git). React, Vite, Context API y CSS Modules. Autenticación con niveles de acceso, gestión de alumnos y matrículas, y generación de certificados e informes en PDF.",
+  "exp.e3.role": "Desarrollador Front-End · Freelance",
+  "exp.e3.date": "Jun 2023 — Jun 2024",
+  "exp.e3.desc": "Landing pages de alta conversión y e-commerces en React (carrito, checkout, integración de pagos), con foco en rendimiento y diseño responsivo. React, JavaScript, Styled Components y Sass.",
 
   "sec.stack": "Tech stack",
   "stack.cat1": "Back-end y Datos",

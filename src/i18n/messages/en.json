@@ -121,9 +121,16 @@
 
   "sec.experience": "Experience",
   "exp.linkedin": "View on LinkedIn",
-  "exp.e1.role": "Full-Stack Developer (freelance)",
+  "exp.caseStudy": "View case study",
+  "exp.e1.role": "Full-Stack Developer · escuta… (own product)",
   "exp.e1.date": "2025 — Present",
-  "exp.e1.desc": "escuta…, a B2B clinical management SaaS (Go, PostgreSQL, Next.js, Stripe): from architecture to deploy.",
+  "exp.e1.desc": "A multi-tenant B2B SaaS for running clinical practices — scheduling, clinical records and billing. Front-end in Next.js, TypeScript, Tailwind and Shadcn; back-end in Go (REST APIs) and PostgreSQL (Supabase with RLS). Shipped to production (Vercel/Render), handling database latency and compliance with the LGPD, Brazil's data protection law.",
+  "exp.e2.role": "Front-End Lead · Education CRM (freelance)",
+  "exp.e2.date": "Sep 2024 — May 2025",
+  "exp.e2.desc": "Led the front-end of a complete education CRM and coordinated a team of 3 developers (code review, Git). React, Vite, Context API and CSS Modules. Authentication with access levels, student and enrolment management, and PDF certificate and report generation.",
+  "exp.e3.role": "Front-End Developer · Freelance",
+  "exp.e3.date": "Jun 2023 — Jun 2024",
+  "exp.e3.desc": "High-conversion landing pages and React e-commerce sites (cart, checkout, payment integration), focused on performance and responsive design. React, JavaScript, Styled Components and Sass.",
 
   "sec.stack": "Tech stack",
   "stack.cat1": "Back-end & Data",
